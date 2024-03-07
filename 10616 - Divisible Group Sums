@@ -1,0 +1,34 @@
+//Given a list of N numbers you will be allowed to choose any M of them. So you can choose in (N
+M
+)
+ways. You will have to determine how many of these chosen groups have a sum, which is divisible by
+D.
+
+ll dp[210][22][12],n,q,a[210],m,d;
+
+ll ok(ll i,ll rem,ll cnt){
+ if(i>=n || cnt==m){
+    return(cnt==m && rem==0);
+ }
+ if(dp[i][rem][cnt]!=-1)return dp[i][rem][cnt];
+ int tmp=(rem+a[i])%d;
+ if(tmp<0)tmp+=d;
+ ll ans=ok(i+1,rem,cnt);
+ ans+=ok(i+1,tmp,cnt+1);
+ return dp[i][rem][cnt]=ans;
+}
+void solve(){
+    int tc=1;
+  while(cin>>n>>q){
+    if(n==0 && q==0)break;
+    cout<<"SET "<<tc<<":"<<nl;
+    for(int i=0;i<n;i++)cin>>a[i];
+    for(int i=1;i<=q;i++){
+       cin>>d>>m;
+        mem(dp,-1);
+        cout<<"QUERY "<<i<<": "<<ok(0,0,0)<<nl;
+    }
+    tc++;
+  }
+
+}
