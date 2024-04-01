@@ -1,0 +1,27 @@
+
+const int N=5e3+12;
+string a,b;
+int dp[N][N],n,m;
+int ok(int i,int j){
+ if(i==n)return m-j;
+ if(j==m)return n-i;
+ if(dp[i][j]!=-1)return dp[i][j];
+ int ans;
+ if(a[i]==b[j]){
+    ans=ok(i+1,j+1);
+ }
+ else{
+    int tmp1=1+ok(i+1,j+1);//REPLACE
+    int tmp2=1+ok(i+1,j);//REMOVE
+    int tmp3=1+ok(i,j+1);//INSERT
+    ans=min({tmp1,tmp2,tmp3});
+ }
+ return dp[i][j]=ans;
+}
+void solve(){
+   cin>>a>>b;
+   n=sz(a);
+   m=sz(b);
+   mem(dp,-1);
+   cout<<ok(0,0);
+}
